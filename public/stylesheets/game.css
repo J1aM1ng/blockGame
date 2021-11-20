@@ -38,6 +38,13 @@ body {
   position: relative;
   min-height: 800px;
 }
+.outerCenter {
+  display: flex;
+}
+
+.innerCenter {
+  justify-content: center;
+}
 
 .game {
   /*窗口尺寸*/
