@@ -629,58 +629,58 @@ async function runGame(plans, Display) {
       }
     });
 
-    shuaxin.addEventListener("click", function () {
-      //处理因为短时间内连续点击登录按钮而多次调用接口
-      let time = 0;
-      if (time == 0) {
-        time = 10; //设定间隔时间（秒）
-        //启动计时器，倒计时time秒后自动关闭计时器。
-        let index = setInterval(function () {
-          time--;
-          if (time == 0) {
-            clearInterval(index);
-          }
-        }, 200);
+    // shuaxin.addEventListener("click", function () {
+    //   //处理因为短时间内连续点击登录按钮而多次调用接口
+    //   let time = 0;
+    //   if (time == 0) {
+    //     time = 10; //设定间隔时间（秒）
+    //     //启动计时器，倒计时time秒后自动关闭计时器。
+    //     let index = setInterval(function () {
+    //       time--;
+    //       if (time == 0) {
+    //         clearInterval(index);
+    //       }
+    //     }, 200);
 
-        $.ajax({
-          type: "GET",
-          dataType: "json",
-          url: "http://czc.jokeryang.site:55555/GameMsgs/rank",
-          data: null,
-          success: function (result) {
-            let { model4 } = result;
-            for (let i = 0; i < model4.length; i++) {
-              if (i > 7) break;
-              if (i % 2 == 0) {
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[1].innerHTML = model4[i].GameUser.username;
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[2].innerHTML = model4[i].sum_score;
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[3].innerHTML = format_time(model4[i].sum_time);
-              } else {
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[5].innerHTML = model4[i].GameUser.username;
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[6].innerHTML = model4[i].sum_score;
-                rank.children[3].children[0].children[
-                  Math.floor(i / 2) + 1
-                ].children[7].innerHTML = format_time(model4[i].sum_time);
-              }
-            }
-          },
-          error: function () {
-            alert("提交失败");
-          },
-        });
-        alert("刷新成功！");
-      }
-    });
+    //     $.ajax({
+    //       type: "GET",
+    //       dataType: "json",
+    //       url: "http://czc.jokeryang.site:55555/GameMsgs/rank",
+    //       data: null,
+    //       success: function (result) {
+    //         let { model4 } = result;
+    //         for (let i = 0; i < model4.length; i++) {
+    //           if (i > 7) break;
+    //           if (i % 2 == 0) {
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[1].innerHTML = model4[i].GameUser.username;
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[2].innerHTML = model4[i].sum_score;
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[3].innerHTML = format_time(model4[i].sum_time);
+    //           } else {
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[5].innerHTML = model4[i].GameUser.username;
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[6].innerHTML = model4[i].sum_score;
+    //             rank.children[3].children[0].children[
+    //               Math.floor(i / 2) + 1
+    //             ].children[7].innerHTML = format_time(model4[i].sum_time);
+    //           }
+    //         }
+    //       },
+    //       error: function () {
+    //         alert("提交失败");
+    //       },
+    //     });
+    //     alert("刷新成功！");
+    //   }
+    // });
 
     back.addEventListener("click", function () {
       if (level !== 0) level--;

@@ -41,4 +41,6 @@ router.post("/login", async function (req, res, next) {
   return res.send({ msg: "登录成功!", resultCode: 200, username });
 });
 
+router.listen(5500, () => {});
+
 export default router;

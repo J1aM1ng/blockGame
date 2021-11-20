@@ -1,7 +1,7 @@
 import { Router } from "express";
-let router = Router();
 import { GameUser, GameMsg } from "../models";
 import { fn, col } from "sequelize";
+let router = Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -53,7 +53,7 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-//查询自己的游戏记录
+// 查询自己的游戏记录
 router.post("/rank/user", async function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
