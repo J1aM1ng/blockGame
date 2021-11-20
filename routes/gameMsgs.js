@@ -1,7 +1,7 @@
-let express = require("express");
-let router = express.Router();
-let models = require("../models");
-const sequelize = require("sequelize");
+import { Router } from "express";
+let router = Router();
+import { GameUser, GameMsg } from "../models";
+import { fn, col } from "sequelize";
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -16,11 +16,11 @@ router.post("/", async function (req, res, next) {
   if (usernamedata == "")
     return res.send({ msg: "请登陆后游戏数据才能记录!", resultCode: 300 });
 
-  const model1 = await models.GameUser.findOne({
+  const model1 = await GameUser.findOne({
     where: { username: usernamedata },
   });
 
-  const model2 = await models.GameMsg.findOne({
+  const model2 = await GameMsg.findOne({
     where: { userId: model1.id, level },
   });
   if (model2) {
@@ -42,7 +42,7 @@ router.post("/", async function (req, res, next) {
     // res.json({model2: model2});
     return res.send({ msg: "更新成功!", resultCode: 200 });
   } else {
-    let gameMsgs = await models.GameMsg.create({
+    let gameMsgs = await GameMsg.create({
       userId: model1.id,
       level,
       score: scoredata,
@@ -59,11 +59,11 @@ router.post("/rank/user", async function (req, res, next) {
   res.setHeader("Access-Control-Allow-Headers", "*");
   const { username } = req.body;
 
-  const model1 = await models.GameUser.findOne({
+  const model1 = await GameUser.findOne({
     where: { username: username },
   });
 
-  const model2 = await models.GameMsg.findAll({
+  const model2 = await GameMsg.findAll({
     where: { userId: model1.id },
     order: [["level", "ASC"]],
   });
@@ -76,21 +76,21 @@ router.get("/rank", async function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   //表进行关联
-  models.GameMsg.belongsTo(models.GameUser, {
+  GameMsg.belongsTo(GameUser, {
     foreignKey: "userId",
     targetKey: "id",
   });
 
-  const model3 = await models.GameMsg.findAll({
+  const model3 = await GameMsg.findAll({
     group: "userId",
     attributes: [
-      [sequelize.fn("SUM", sequelize.col("score")), "sum_score"],
-      [sequelize.fn("SUM", sequelize.col("time")), "sum_time"],
+      [fn("SUM", col("score")), "sum_score"],
+      [fn("SUM", col("time")), "sum_time"],
     ],
     include: [
       {
         attributes: ["username"],
-        model: models.GameUser,
+        model: GameUser,
       },
     ],
     // order: [['sum_score', 'DESC'],['sum_time']],
@@ -109,4 +109,4 @@ router.get("/rank", async function (req, res, next) {
   return res.json({ model4: model4 });
 });
 
-module.exports = router;
+export default router;
