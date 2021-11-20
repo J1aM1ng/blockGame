@@ -1,0 +1,276 @@
+.background    { background: rgb(52, 166, 251);
+                 table-layout: fixed;
+                 border-spacing: 0;   }
+.background td { padding: 0;          }
+.lava          { background: rgb(255, 100, 100); }
+.wall          { background: white;   }
+
+.actor  { position: absolute;  }
+.coin   { background: rgb(241, 229, 89); }
+.player { background: rgb(64, 64, 64); }
+/* .Monster{ background: rgb(138, 78, 148);} */
+.lost .player {
+  background: rgb(160, 64, 64);
+}
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
+body{
+  position: relative;
+  height: 800px;
+
+}
+
+.game {/*窗口尺寸*/
+  overflow: hidden;
+  max-width: 800px;
+  max-height: 550px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -225px;
+  margin-left: -400px;
+  border-radius: 0 0 50px 50px;
+}
+
+.btn {
+  background-color: rgb(251, 214, 52);
+  /* color: #fff; */
+  font-weight: 500;
+}
+
+.buttons { 
+  background: rgb(251, 214, 52); 
+  width: 800px;
+  height: 80px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -305px;
+  margin-left: -400px;
+  border-radius: 50px 50px 0 0;
+}
+
+#mapEdit{
+  /* width: 1000px; */
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 95%;
+  margin-left: -500px;
+}
+
+i.icon-zuoxiang,i.icon-zhongxinkaishi,i.icon-youxiang,i.icon-blood-bank-,i.icon-paiming,i.icon-zhuce,i.icon-tubiaozhizuomoban,i.icon-zhuce,i.icon-denglu,i.icon-ditu,i.icon-shouye,i.icon-chuangguan,i.icon-yinle{
+  width: 36px;
+  height: 40px;
+  float: left;
+  margin-top: 20px;
+  margin-left: 10px;
+  text-align: center;
+  font-size: 30px;
+}
+/*时间*/
+#timeConsuming {
+  float: left;
+  font: bold 18pt sans;
+  margin-top: 25px;
+  /* width: 150px; */
+}
+
+/*血条*/
+#HP{float: left; width: 110px;height: 30px;border-radius: 10px;background: white;margin-top: 26px;border: 4px solid #ff6780;}
+#HP_child{position: relative;height:100%;border-radius:5px;}
+#HP_msg{position: absolute;height:100%;width: 20px;font: bold 18pt sans;margin-top: -3px;margin-left: 1px; z-index: 10;}
+#process-animate{background: #f1173c;position: absolute;left: 0;top: 0;border-radius:inherit;height: 100%;
+    animation: process 1s linear forwards ;
+}
+@keyframes process
+{
+    0%{
+        left:0;right:100%;
+    }
+    20%{
+        right:80%
+    }
+    40%{
+        right:60%;
+    }
+    60%{right:40%;}
+    80%{right:20%;}
+    100%{right:0;}
+}
+
+#islogin{
+  float: left;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  font: bold 10pt sans;
+}
+
+.hide{
+  display: none;
+}
+.form{
+  position: absolute;
+  width: 800px;
+  height: 450px;
+  top: 50%;
+  left: 50%;
+  margin-top: -225px;
+  margin-left: -400px;
+  z-index: 10;
+  font-weight: 500;
+  /* color: #eee; */
+}
+#login{
+  border-radius: 10px;
+  width: 500px;
+  height: 300px;
+  margin-left: 150px;
+  margin-top: 75px;
+  /* background-color:rgb(0, 255, 170); */
+  /* background: url(../img/bgi.png); */
+  background-color:#80dfff;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  -webkit-background-size: cover;
+
+  -o-background-size: cover;
+
+  background-position: center 0;
+}
+#login h2{
+  padding: 15px;
+  text-align: center;
+}
+#login .form-group{
+  margin: 30px auto;
+  padding-left: 100px;
+}
+#login button{
+  margin-left: 125px;
+}
+#register{
+  border-radius: 10px;
+  width: 500px;
+  height: 300px;
+  margin-left: 150px;
+  margin-top: 75px;
+  /* background-color:rgb(0, 255, 170); */
+  /* background: url(../img/bgi.png); */
+  background-color:#80dfff;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  -webkit-background-size: cover;
+
+  -o-background-size: cover;
+
+  background-position: center 0;
+}
+#register h2{
+  padding: 15px;
+  text-align: center;
+}
+#register .form-group{
+  margin: 15px auto;
+  padding-left: 100px;
+}
+#register button{
+  margin-left: 130px;
+}
+
+
+#rank{
+  border-radius: 10px;
+  width: 500px;
+  height: 300px;
+  margin-left: 150px;
+  margin-top: 75px;
+  /* background-color:rgb(0, 255, 170); */
+  /* background: url(../img/bgi.png); */
+  background-color:#80dfff;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  -webkit-background-size: cover;
+
+  -o-background-size: cover;
+
+  background-position: center 0;
+}
+#rank h2{
+  padding: 15px;
+  text-align: center;
+}
+#rank #yourrank{
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+#rank #yourrank{
+  display: inline;
+  margin: 60px;
+  text-align: center;
+}
+#rank #refresh{
+  display: inline;
+  margin: 60px;
+  text-align: center;
+}
+#rank table{
+  margin: 10px auto;
+  /* width: 400px; */
+}
+#rank table tr th{
+  text-align: center;
+  height: 30px;
+}
+#rank table tr td{
+  text-align: center;
+  height: 30px;
+}
+#rankbox{
+  width: 400px;
+  height: 300px;
+  margin-left: 200px;
+  margin-top: 75px;
+  /* background-color:rgb(0, 255, 170); */
+  z-index: 100;
+  /* background: url(../img/bgi.png); */
+  background-color:#80dfff;
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  -webkit-background-size: cover;
+
+  -o-background-size: cover;
+
+  background-position: center 0;
+
+  overflow: hidden;
+}
+#rankbox table{
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 50px;
+  /* width: 400px; */
+}
+#rankbox table tr th{
+  text-align: center;
+  height: 30px;
+}
+#rankbox table tr td{
+  text-align: center;
+  height: 30px;
+}

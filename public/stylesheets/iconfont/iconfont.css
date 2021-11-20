@@ -1,0 +1,125 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2620955 */
+  src: url('iconfont.woff2?t=1624238419815') format('woff2'),
+       url('iconfont.woff?t=1624238419815') format('woff'),
+       url('iconfont.ttf?t=1624238419815') format('truetype'),
+       url('//at.alicdn.com/t/font_2942992_axgag0376sf.woff2?t=1637067401876') format('woff2'),
+       url('//at.alicdn.com/t/font_2942992_axgag0376sf.woff?t=1637067401876') format('woff'),
+       url('//at.alicdn.com/t/font_2942992_axgag0376sf.ttf?t=1637067401876') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-icon-wodepaiming:before {
+  content: "\e627";
+}
+
+.icon-shuaxin:before {
+  content: "\e685";
+}
+
+.icon-denglu1:before {
+  content: "\e606";
+}
+
+.icon-weibiaoti562:before {
+  content: "\e649";
+}
+
+.icon-mima:before {
+  content: "\e64c";
+}
+
+.icon-shouji:before {
+  content: "\e611";
+}
+
+.icon-0_round:before {
+  content: "\e63e";
+}
+
+.icon-4_round:before {
+  content: "\e63f";
+}
+
+.icon-1_round:before {
+  content: "\e640";
+}
+
+.icon-8_round:before {
+  content: "\e641";
+}
+
+.icon-3_round:before {
+  content: "\e642";
+}
+
+.icon-2_round:before {
+  content: "\e643";
+}
+
+.icon-7_round:before {
+  content: "\e644";
+}
+
+.icon-6_round:before {
+  content: "\e645";
+}
+
+.icon-5_round:before {
+  content: "\e646";
+}
+
+.icon-9_round:before {
+  content: "\e647";
+}
+
+.icon-zhongxinkaishi:before {
+  content: "\e648";
+}
+
+.icon-tubiaozhizuomoban:before {
+  content: "\e602";
+}
+
+.icon-blood-bank-:before {
+  content: "\e609";
+}
+
+.icon-zhuce:before {
+  content: "\e71c";
+}
+
+.icon-paiming:before {
+  content: "\e624";
+}
+
+.icon-xietang:before {
+  content: "\e683";
+}
+
+.icon-youxiang:before {
+  content: "\e621";
+}
+
+.icon-zuoxiang:before {
+  content: "\e622";
+}
+
+.icon-denglu:before {
+  content: "\e610";
+}
+
+.icon-zidingyi:before {
+  content: "\eb6a";
+}
+
+.icon-ditu:before {
+  content: "\e8ad";
+}

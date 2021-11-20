@@ -1,0 +1,25 @@
+{
+  "name": "game",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
+    "sequelize-typescript": "^2.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.35",
+    "@types/validator": "^13.1.4"
+  }
+}

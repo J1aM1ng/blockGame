@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "czc_dbd",
+    "password": "HE668RTTh7W7GAN6",
+    "database": "czc_db",
+    "host": "www.jokeryang.site",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "czc_dbd",
+    "password": "HE668RTTh7W7GAN6",
+    "database": "czc_db",
+    "host": "www.jokeryang.site",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "czc_dbd",
+    "password": "HE668RTTh7W7GAN6",
+    "database": "czc_db",
+    "host": "www.jokeryang.site",
+    "dialect": "mysql"
+  }
+}
