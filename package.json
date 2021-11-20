@@ -21,5 +21,6 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.35",
     "@types/validator": "^13.1.4"
-  }
+  },
+  "type":"module"
 }
