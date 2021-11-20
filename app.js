@@ -4,10 +4,10 @@ import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-import indexRouter from "./server/index";
-import usersRouter from "./server/users";
-import gameUsersRouter from "./server/gameUsers";
-import gameMsgsRouter from "./server/gameMsgs";
+import indexRouter from "./router/index";
+import usersRouter from "./router/users";
+import gameUsersRouter from "./router/gameUsers";
+import gameMsgsRouter from "./router/gameMsgs";
 
 let app = express();
 
