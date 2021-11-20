@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "czc_dbd",
-    "password": "HE668RTTh7W7GAN6",
-    "database": "czc_db",
-    "host": "www.jokeryang.site",
+    "username": "root",
+    "password": "rootsjm",
+    "database": "blockGame",
+    "host": "http://localhost:5500",
     "dialect": "mysql"
   },
   "test": {
-    "username": "czc_dbd",
-    "password": "HE668RTTh7W7GAN6",
-    "database": "czc_db",
-    "host": "www.jokeryang.site",
+    "username": "root",
+    "password": "rootsjm",
+    "database": "blockGame",
+    "host": "http://localhost:5500",
     "dialect": "mysql"
   },
   "production": {
-    "username": "czc_dbd",
-    "password": "HE668RTTh7W7GAN6",
-    "database": "czc_db",
-    "host": "www.jokeryang.site",
+    "username": "root",
+    "password": "rootsjm",
+    "database": "blockGame",
+    "host": "http://localhost:5500",
     "dialect": "mysql"
   }
 }
