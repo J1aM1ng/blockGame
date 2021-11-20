@@ -28,40 +28,44 @@
     <span title="时间"><i class="iconfont icon-tubiaozhizuomoban"></i></span>
     <div id="timeConsuming"></div>
     <!-- 上一关 -->
-    <span title="上一关"><i class="iconfont icon-zuoxiang" id="back"></i></span>
-    <!-- 重心开始 -->
-    <span title="重心开始"
-      ><i class="iconfont icon-zhongxinkaishi" id="restart"></i
+    <span title="上一关" class="clickHand"
+      ><i class="iconfont icon-zuoxiang" id="back"></i
     ></span>
+    <!-- 重新开始 -->
+    <span title="重新开始" class="clickHand">
+      <i class="iconfont icon-zhongxinkaishi" id="restart"></i>
+    </span>
     <!-- 下一关 -->
-    <span title="下一关"><i class="iconfont icon-youxiang" id="next"></i></span>
+    <span title="下一关" class="clickHand"
+      ><i class="iconfont icon-youxiang" id="next"></i
+    ></span>
     <!-- 排名 -->
-    <span title="排名"
+    <span title="排名" class="clickHand"
       ><i class="iconfont icon-paiming" id="btn_rank"></i
     ></span>
     <!-- 登录 -->
-    <span title="登陆"
+    <span title="登录" class="clickHand"
       ><i class="iconfont icon-denglu" id="btn_login"></i
     ></span>
     <!-- 注册 -->
-    <span title="注册"
+    <span title="注册" class="clickHand"
       ><i class="iconfont icon-zhuce" id="btn_register"></i
     ></span>
     <!-- 复制当前地图 -->
-    <span title="复制当前地图"
+    <span title="复制当前地图" class="clickHand"
       ><i class="iconfont icon-ditu" id="btn_copyMap" data-clipboard-text=""></i
     ></span>
     <!-- 自定义地图 -->
-    <span title="自定义地图" onclick="openCloseEdit()"
+    <span title="自定义地图" onclick="openCloseEdit()" class="clickHand"
       ><i class="iconfont icon-shouye" id="btn_designMap"></i
     ></span>
     <!-- 背景音乐 -->
-    <span title="背景音乐" onclick="startStopMusic()"
+    <span title="背景音乐" onclick="startStopMusic()" class="clickHand"
       ><i class="iconfont icon-yinle" id="btn_music"></i
     ></span>
     <audio loop src="./public/background-music.mp3" id="bgaudio"></audio>
     <!-- 回到平台关卡 -->
-    <span title="回到平台关卡" onclick="backMap()"
+    <span title="回到平台关卡" onclick="backMap()" class="clickHand"
       ><i class="iconfont icon-chuangguan" id="btn_backMap"></i
     ></span>
 
@@ -72,7 +76,7 @@
     <div id="login" class="hide">
       <!-- 登录表单 -->
       <form id="login1" method="post" action="#" target="my_iframe">
-        <h2>登陆</h2>
+        <h2>登录</h2>
         <div class="form-group">
           <label for="user" style="display: inline"
             ><i class="iconfont icon-weibiaoti562"></i>用户名：</label
@@ -100,9 +104,11 @@
             autocomplete="off"
           />
         </div>
-        <button id="denglu" type="button" class="btn">登录</button>
+        <button id="denglu" type="button" class="btn needShadow">登录</button>
         <!-- btn-primary -->
-        <button id="tiaozhuandaozhuce" type="button" class="btn">注册</button>
+        <button id="tiaozhuandaozhuce" type="button" class="btn needShadow">
+          注册
+        </button>
       </form>
     </div>
     <div id="register" class="">
@@ -156,8 +162,8 @@
             autocomplete="off"
           />
         </div>
-        <button id="zhuce" type="submit" class="btn">注册</button>
-        <button id="chongzhi" type="button" class="btn">重置</button>
+        <button id="zhuce" type="submit" class="btn needShadow">注册</button>
+        <button id="chongzhi" type="button" class="btn needShadow">重置</button>
       </form>
       <iframe name="my_iframe" style="display: none"></iframe>
       <!-- <div id="reqmsg" class=""></div> -->
@@ -271,59 +277,62 @@
     </div>
   </div>
 
-  <div
-    style="
-      font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
-        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-    "
-    id="mapEdit"
-    class="hide"
-  >
+  <div class="outerCenter">
     <div
       style="
-        font-size: 15px;
-        border-radius: 10px 10px 0 0;
-        background-color: #ffd11a;
-        height: 80px;
-        line-height: 80px;
-        font-weight: 600;
-        width: 100%;
+        font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
       "
-      class="top"
+      id="mapEdit"
+      class="hide innerCenter"
     >
-      &nbsp;&nbsp;<span style="color: #6666ff">. 空气</span>
-      <span style="color: #6666ff"># 墙</span>
-      <span style="color: #6666ff">@ 用户控制的小人</span>
-      <span style="color: #6666ff">o 金币</span>
-      <span style="color: rgb(255, 100, 100)"
-        >+ = | v 分别代表 不动 左右移动 上下移动
-        上下移动碰到墙体重置的岩浆</span
-      >
-      <button
+      <div
         style="
-          margin-left: 10px;
-          color: #007f80;
-          border-radius: 10%;
-          height: 60px;
-          border: 2px solid #ff9900;
-          font-weight: 700;
+          font-size: 15px;
+          border-radius: 10px 10px 0 0;
+          background-color: #ffd11a;
+          height: 120px;
+          line-height: 50px;
+          font-weight: 600;
+          width: 100%;
         "
-        class="btn"
-        onclick="startUserDesignedMap()"
-        id="designMapClick"
+        class="top"
       >
-        自定义地图
-      </button>
+        &nbsp;&nbsp;<span style="color: #6666ff">(. 空气)</span>
+        <span style="color: #6666ff">(# 墙)</span>
+        <span style="color: #6666ff">(@ 用户控制的小人)</span>
+        <span style="color: #6666ff">(o 金币)</span><br />
+        <span style="color: rgb(255, 100, 100)"
+          >&nbsp;&nbsp;+ = | v 分别代表
+          不动的岩浆/左右移动的岩浆/上下移动的岩浆/上下移动碰到墙体重置的岩浆</span
+        >
+        <button
+          style="
+            margin-left: 10px;
+            color: white;
+            border-radius: 20px;
+            height: 40px;
+            border: 2px solid black;
+            font-weight: 700;
+            background-color: black;
+          "
+          class="btn needShadow"
+          onclick="startUserDesignedMap()"
+          id="designMapClick"
+        >
+          自定义地图
+        </button>
+      </div>
+      <textarea
+        style="border: 2px solid #ffd11a; margin-bottom: 40px"
+        id="map"
+        class=""
+        cols="110"
+        rows="30"
+        placeholder=" 开始创建属于你自己的地图吧!!!"
+      >
+      </textarea>
     </div>
-    <textarea
-      style="border: 2px solid #ffd11a; margin-bottom: 40px"
-      id="map"
-      class=""
-      cols="110"
-      rows="30"
-      placeholder=" 开始创建属于你自己的地图吧!!!"
-    >
-    </textarea>
   </div>
 
   <script>
@@ -366,8 +375,8 @@
     }
     // 关闭或开启自定义地图界面
     function openCloseEdit() {
-      let mapEdit = document.getElementById("mapEdit");
-      let map = document.getElementById("map");
+      const mapEdit = document.getElementById("mapEdit");
+      const map = document.getElementById("map");
       if (mapEdit.className === "hide") {
         map.innerHTML = "";
         mapEdit.className = "";
