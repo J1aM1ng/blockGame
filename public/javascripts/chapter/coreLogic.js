@@ -15,39 +15,40 @@ let levelglobal; // 当前关卡
 let globalID; // 动画任务id
 //显示当前时间、当前血量、各个关卡的通关时间以及通关血量
 let nowtime = new Date();
-function format_time(sec) {
+const format_time = (sec) => {
   return [parseInt(sec / 3600), parseInt((sec / 60) % 60), sec % 60]
     .join(":")
     .replace(/\b(\d)\b/g, "0$1");
-}
+};
 
-function showtime() {
+const showtime = () => {
   let elt = document.getElementById("timeConsuming");
   // console.log(elt);
   let now = new Date() - nowtime;
   elt.innerHTML = format_time(Math.ceil(now / 1000));
-  setTimeout(showtime, 1000); // 在1秒后再次执行
-}
-function showhp(level) {
+  // 在1秒后再次执行
+  setTimeout(showtime, 1000);
+};
+const showhp = (level) => {
   let HP = document.getElementById("HP");
   // console.log(HP);
   HP.children[0].innerHTML = `HP:${hp}`;
   HP.children[1].style.width = `${(hp / scoremaxArr[level]) * 100}%`;
   // console.log(hp/scoremaxArr[level]*100);
-}
-function delay() {
-  //放置堆栈爆掉就这么写了
+};
+const delay = () => {
+  // 防止堆栈爆掉就这么写了
   showhp(levelglobal);
   setTimeout(delay, 1000);
-}
+};
 
-window.onload = function () {
+window.onload = () => {
   // 当onload事件发生时开始显示时间和实时更新血量
   showtime();
   delay();
 };
 
-//存储关卡对象
+// 存储关卡对象
 let Level = class Level {
   constructor(plan) {
     let rows = plan
@@ -77,11 +78,9 @@ let State = class State {
     this.actors = actors;
     this.status = status; //游戏结束后，status将切换为lost或won
   }
-
   static start(level) {
     return new State(level, level.startActors, "playing");
   }
-
   get player() {
     return this.actors.find((a) => a.type == "player");
   }
@@ -96,22 +95,22 @@ let Vec = class Vec {
     return new Vec(this.x + other.x, this.y + other.y);
   }
   times(factor) {
-    //速度矢量乘以时间间隔获得在此期间的行进距离
+    // 速度矢量乘以时间间隔获得在此期间的行进距离
     return new Vec(this.x * factor, this.y * factor);
   }
 };
 
-//玩家对象
+// 玩家对象
 let Player = class Player {
   constructor(pos, speed) {
-    this.pos = pos; //保存相对于元素左上角的坐标
-    this.speed = speed; //存储速度以模拟动量和重力
+    // 保存相对于元素左上角的坐标
+    this.pos = pos;
+    // 存储速度以模拟动量和重力
+    this.speed = speed;
   }
-
   get type() {
     return "player";
   }
-
   static create(pos) {
     return new Player(pos.plus(new Vec(0, -0.5)), new Vec(0, 0));
   }
@@ -119,18 +118,19 @@ let Player = class Player {
 
 Player.prototype.size = new Vec(0.8, 1.5);
 
-//岩浆对象
+// 岩浆对象
 let Lava = class Lava {
   constructor(pos, speed, reset) {
-    this.pos = pos; //保存相对于元素左上角的坐标
-    this.speed = speed; //存储速度以模拟动量和重力
-    this.reset = reset; //有则遇到障碍物重置位置 无则遇到障碍物反转速度向另一个方向移动
+    // 保存相对于元素左上角的坐标
+    this.pos = pos;
+    // 存储速度以模拟动量和重力
+    this.speed = speed;
+    // 有则遇到障碍物重置位置 无则遇到障碍物反转速度向另一个方向移动
+    this.reset = reset;
   }
-
   get type() {
     return "lava";
   }
-
   static create(pos, ch) {
     if (ch == "=") {
       //左右移动的岩浆
@@ -144,24 +144,24 @@ let Lava = class Lava {
     }
   }
 };
+// 岩浆大小1x1
+Lava.prototype.size = new Vec(1, 1);
 
-Lava.prototype.size = new Vec(1, 1); //岩浆大小1x1
-
-//金币对象
+// 金币对象
 let Coin = class Coin {
   constructor(pos, basePos, wobble) {
     this.pos = pos;
     this.basePos = basePos;
-    this.wobble = wobble; //轻微垂直往复运动
+    // 轻微垂直往复运动
+    this.wobble = wobble;
   }
-
   get type() {
     return "coin";
   }
-
   static create(pos) {
     let basePos = pos.plus(new Vec(0.2, 0.1));
-    return new Coin(basePos, basePos, Math.random() * Math.PI * 2); //为了避免所有硬币都同步上下移动的情况，起始阶段随机
+    // 为了避免所有硬币都同步上下移动的情况，起始阶段随机
+    return new Coin(basePos, basePos, Math.random() * Math.PI * 2);
   }
 };
 
@@ -197,7 +197,7 @@ let levelChars = {
 
 let simpleLevel = new Level(simpleLevelPlan);
 
-function elt(name, attrs, ...children) {
+const elt = (name, attrs, ...children) => {
   let dom = document.createElement(name);
   for (let attr of Object.keys(attrs)) {
     dom.setAttribute(attr, attrs[attr]);
@@ -206,7 +206,7 @@ function elt(name, attrs, ...children) {
     dom.appendChild(child);
   }
   return dom;
-}
+};
 
 let DOMDisplay = class DOMDisplay {
   constructor(parent, level) {
@@ -214,16 +214,15 @@ let DOMDisplay = class DOMDisplay {
     this.actorLayer = null;
     parent.appendChild(this.dom);
   }
-
   clear() {
     this.dom.remove();
   }
 };
+// 单个单位在屏幕上占用的像素数
+let scale = 20;
 
-let scale = 20; //单个单位在屏幕上占用的像素数
-
-//背景网格
-function drawGrid(level) {
+// 背景网格
+const drawGrid = (level) => {
   return elt(
     "table",
     {
@@ -238,10 +237,10 @@ function drawGrid(level) {
       )
     )
   );
-}
+};
 
-//可移动对象
-function drawActors(actors) {
+// 可移动对象
+const drawActors = (actors) => {
   return elt(
     "div",
     {},
@@ -254,7 +253,7 @@ function drawActors(actors) {
       return rect;
     })
   );
-}
+};
 
 DOMDisplay.prototype.syncState = function (state) {
   //syncState用于使显示器展开给定的状态，删除旧演员图形，重绘新演员图形
@@ -266,12 +265,12 @@ DOMDisplay.prototype.syncState = function (state) {
 };
 
 DOMDisplay.prototype.scrollPlayerIntoView = function (state) {
-  //确保如果关卡延伸到视口外会滚动此视口以确保玩家位于中心位置
+  // 如果关卡延伸到视口外会滚动此视口以确保玩家位于中心位置
   let width = this.dom.clientWidth;
   let height = this.dom.clientHeight;
   let margin = width / 3;
 
-  // The viewport
+  // 视口
   let left = this.dom.scrollLeft,
     right = left + width;
   let top = this.dom.scrollTop,
@@ -279,7 +278,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function (state) {
 
   let player = state.player;
   let center = player.pos.plus(player.size.times(0.5)).times(scale);
-  //当玩家太位于视口边缘时通过操作此元素的scrollleft和scrolltop属性来更改滚动位置
+  // 当玩家过于靠近视口边缘时通过操作此元素的scrollleft和scrolltop属性来更改滚动位置
   if (center.x < left + margin) {
     this.dom.scrollLeft = center.x - margin;
   } else if (center.x > right - margin) {
@@ -308,7 +307,7 @@ Level.prototype.touches = function (pos, size, type) {
   return false;
 };
 
-//用于计算给定时间步后的新状态和位置
+// 用于计算给定时间步后的新状态和位置
 State.prototype.update = function (time, keys) {
   let actors = this.actors.map((actor) => actor.update(time, this, keys));
   let newState = new State(this.level, actors, this.status);
@@ -328,18 +327,18 @@ State.prototype.update = function (time, keys) {
   return newState;
 };
 
-//检测演员之间是否重叠,重叠返回true
-function overlap(actor1, actor2) {
+// 检测演员之间是否重叠,重叠返回true
+const overlap = (actor1, actor2) => {
   return (
     actor1.pos.x + actor1.size.x > actor2.pos.x &&
     actor1.pos.x < actor2.pos.x + actor2.size.x &&
     actor1.pos.y + actor1.size.y > actor2.pos.y &&
     actor1.pos.y < actor2.pos.y + actor2.size.y
   );
-}
+};
 
-//碰到岩浆扣血
-Lava.prototype.collide = function (state) {
+// 碰到岩浆扣血
+Lava.prototype.collide = (state) => {
   hp--;
   if (hp <= 0) {
     // setTimeout(function(){for(let i=1;i<=100;i++){setTimeout(function(){hp++},100)}},600)
@@ -349,28 +348,30 @@ Lava.prototype.collide = function (state) {
   } else return new State(state.level, state.actors, "playing");
 };
 
-//实现在一定时间段内相同请求之执行一次
-function Delayer(callback, delayTime) {
-  this.callback = callback;
-  this.count = 0;
-  this.delayTime = delayTime;
-}
-Delayer.prototype.delay = function () {
-  if (++this.count == 1) {
-    let self = this;
-    setTimeout(function () {
-      try {
-        self.callback();
-      } catch (err) {
-      } finally {
-        //执行完后将值清空，保证下次还能执行
-        self.count = 0;
-      }
-    }, this.delayTime);
+// 实现在一定时间段内相同请求之执行一次
+class Delayer {
+  constructor(callback, delayTime) {
+    this.callback = callback;
+    this.count = 0;
+    this.delayTime = delayTime;
   }
-};
-//碰到金币金币就消失,并加血，如果碰到的是最后一块金币则赢了
-Coin.prototype.collide = function (state) {
+  delay() {
+    if (++this.count == 1) {
+      let self = this;
+      setTimeout(function () {
+        try {
+          self.callback();
+        } catch (err) {
+        } finally {
+          //执行完后将值清空，保证下次还能执行
+          self.count = 0;
+        }
+      }, this.delayTime);
+    }
+  }
+}
+// 碰到金币金币就消失,并加血，如果碰到的是最后一块金币则本关赢了
+Coin.prototype.collide = (state) => {
   hp += 5;
   let filtered = state.actors.filter((a) => a != this);
   let status = state.status;
@@ -447,8 +448,8 @@ Player.prototype.update = function (time, state, keys) {
   return new Player(pos, new Vec(xSpeed, ySpeed));
 };
 
-//跟踪按键
-function trackKeys(keys) {
+// 跟踪用户键盘按键
+const trackKeys = (keys) => {
   let down = Object.create(null);
   function track(event) {
     if (keys.includes(event.key)) {
@@ -456,16 +457,14 @@ function trackKeys(keys) {
       event.preventDefault();
     }
   }
-
   window.addEventListener("keydown", track);
   window.addEventListener("keyup", track);
-
   return down;
-}
+};
 
 let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
-function runAnimation(frameFunc) {
+const runAnimation = (frameFunc) => {
   let lastTime = null;
   function frame(time) {
     if (lastTime != null) {
@@ -476,9 +475,9 @@ function runAnimation(frameFunc) {
     globalID = requestAnimationFrame(frame);
   }
   globalID = requestAnimationFrame(frame);
-}
+};
 
-function runLevel(level, Display) {
+const runLevel = (level, Display) => {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
@@ -486,10 +485,12 @@ function runLevel(level, Display) {
   return new Promise((resolve) => {
     runAnimation((time) => {
       let designMapClick = document.getElementById("designMapClick");
-      designMapClick.addEventListener("click", function () {
+      designMapClick.addEventListener("click", () => {
         if (isUserDesignedMap == true) {
-          display.clear(); // 清除幕布
-          resolve("end"); // 结束动画
+          // 清除幕布
+          display.clear();
+          // 结束动画
+          resolve("end");
         }
       });
       // console.log("f:",f);
@@ -505,18 +506,18 @@ function runLevel(level, Display) {
       let restart = document.getElementById("restart");
       let next = document.getElementById("next");
 
-      restart.addEventListener("click", function () {
+      restart.addEventListener("click", () => {
         state.status = "lost";
       });
 
-      back.addEventListener("click", function () {
+      back.addEventListener("click", () => {
         if (level !== 0) {
           level--;
           state.status = "lost";
         }
       });
 
-      next.addEventListener("click", function () {
+      next.addEventListener("click", () => {
         state.status = "lost";
       });
 
@@ -539,9 +540,9 @@ function runLevel(level, Display) {
       }
     });
   });
-}
+};
 
-async function runGame(plans, Display) {
+const runGame = async (plans, Display) => {
   for (let level = 0; level < plans.length; ) {
     let back = document.getElementById("back");
     let next = document.getElementById("next");
@@ -563,13 +564,13 @@ async function runGame(plans, Display) {
     let chongzhi = document.getElementById("chongzhi");
     levelglobal = level;
 
-    zhuce.addEventListener("click", function () {
+    zhuce.addEventListener("click", () => {
       //处理因为短时间内连续点击登录按钮而多次调用接口
       let time = 0;
       if (time == 0) {
         time = 10; //设定间隔时间（秒）
         //启动计时器，倒计时time秒后自动关闭计时器。
-        let index = setInterval(function () {
+        let index = setInterval(() => {
           time--;
           if (time == 0) {
             clearInterval(index);
@@ -579,29 +580,32 @@ async function runGame(plans, Display) {
           type: "POST",
           dataType: "json",
           url: "http://czc.jokeryang.site:55555/GameUsers",
-          data: $("#register1").serialize(), //提交的数据
-          success: function (result) {
-            console.log(result); //打印服务端返回的数据(调试用)
+          // 提交的数据
+          data: $("#register1").serialize(),
+          success: (result) => {
+            // 打印服务端返回的数据(调试用)
+            console.log(result);
             if (result.resultCode == 200) {
               register.className = "hide";
             }
             console.log(result.msg);
             alert(result.msg);
           },
-          error: function () {
+          error: () => {
             alert("提交失败");
           },
         });
       }
     });
 
-    denglu.addEventListener("click", function () {
-      //处理因为短时间内连续点击登录按钮而多次调用接口
+    denglu.addEventListener("click", () => {
+      // 处理因为短时间内连续点击登录按钮而多次调用接口(防抖)
       let time = 0;
       if (time == 0) {
-        time = 10; //设定间隔时间（秒）
-        //启动计时器，倒计时time秒后自动关闭计时器。
-        let index = setInterval(function () {
+        // 设定间隔时间（秒）
+        time = 10;
+        // 启动计时器，倒计时time秒后自动关闭计时器。
+        let index = setInterval(() => {
           time--;
           if (time == 0) {
             clearInterval(index);
@@ -612,9 +616,11 @@ async function runGame(plans, Display) {
           type: "POST",
           dataType: "json",
           url: "http://czc.jokeryang.site:55555/GameUsers/login",
-          data: $("#login1").serialize(), //提交的数据
-          success: function (result) {
-            // console.log(result);       //打印服务端返回的数据(调试用)
+          // 提交的数据
+          data: $("#login1").serialize(),
+          success: (result) => {
+            // 打印服务端返回的数据(调试用)
+            // console.log(result);
             if (result.resultCode == 200) {
               islogin.innerHTML = `hi,${result.username}`;
               login.className = "hide";
@@ -622,7 +628,7 @@ async function runGame(plans, Display) {
             // console.log(result.msg);
             alert(result.msg);
           },
-          error: function () {
+          error: () => {
             alert("提交失败");
           },
         });
@@ -682,22 +688,22 @@ async function runGame(plans, Display) {
     //   }
     // });
 
-    back.addEventListener("click", function () {
+    back.addEventListener("click", () => {
       if (level !== 0) level--;
     });
 
-    next.addEventListener("click", function () {
+    next.addEventListener("click", () => {
       if (level + 1 !== plans.length) level++;
     });
 
-    btn_login.onclick = function () {
+    btn_login.onclick = () => {
       rank.className = "hide";
       if (login.className === "") login.className = "hide";
       else login.className = "";
       register.className = "hide";
     };
 
-    btn_rank.onclick = function () {
+    btn_rank.onclick = () => {
       if (rank.className === "") rank.className = "hide";
       else rank.className = "";
       login.className = "hide";
@@ -708,7 +714,7 @@ async function runGame(plans, Display) {
         dataType: "json",
         url: "http://czc.jokeryang.site:55555/GameMsgs/rank",
         data: null,
-        success: function (result) {
+        success: (result) => {
           let { model4 } = result;
           // console.log(rank)
           for (let i = 0; i < model4.length; i++) {
@@ -736,13 +742,13 @@ async function runGame(plans, Display) {
             }
           }
         },
-        error: function () {
+        error: () => {
           alert("提交失败");
         },
       });
     };
 
-    btn_register.onclick = function () {
+    btn_register.onclick = () => {
       rank.className = "hide";
       login.className = "hide";
       if (register.className === "") register.className = "hide";
@@ -751,14 +757,14 @@ async function runGame(plans, Display) {
 
     // 点击复制地图按钮复制当前地图
     let clipboard = new ClipboardJS("#btn_copyMap");
-    clipboard.on("success", function (e) {
+    clipboard.on("success", (e) => {
       e.clearSelection();
     });
     btn_copyMap.onclick = function () {
       this.setAttribute("data-clipboard-text", plans[level]);
     };
 
-    myrank.onclick = function () {
+    myrank.onclick = () => {
       let username = document
         .getElementById("islogin")
         .innerHTML.trim()
@@ -772,9 +778,11 @@ async function runGame(plans, Display) {
           type: "POST",
           dataType: "json",
           url: "http://czc.jokeryang.site:55555/GameMsgs/rank/user",
-          data: { username }, //提交的数据
-          success: function (result) {
-            // console.log(result);       //打印服务端返回的数据(调试用)
+          // 提交的数据
+          data: { username },
+          success: (result) => {
+            // 打印服务端返回的数据(调试用)
+            // console.log(result);
             let { model2 } = result;
             for (let i = 0; i < model2.length; i++) {
               // console.log(model2[i].score+";"+model2[i].level+";"+model2[i].time);
@@ -851,14 +859,14 @@ async function runGame(plans, Display) {
       }
     };
 
-    tiaozhuandaozhuce.onclick = function () {
+    tiaozhuandaozhuce.onclick = () => {
       // console.log()
       rank.className = "hide";
       login.className = "hide";
       register.className = "";
     };
 
-    chongzhi.onclick = function () {
+    chongzhi.onclick = () => {
       // console.log(register.children[0].children[1].children[1].value);
       register.children[0].children[1].children[1].value = "";
       register.children[0].children[2].children[1].value = "";
@@ -886,21 +894,22 @@ async function runGame(plans, Display) {
       let data = { usernamedata, level: level + 1, scoredata, timedata };
       console.log(usernamedata);
       if (!isUserDesignedMap) {
-        // 若当前地图是用户自定义地图闯关数据不录入数据库中
+        // 若当前地图是用户自定义地图闯关数据,不录入数据库中
         $.ajax({
           type: "POST",
           dataType: "json",
           url: "http://czc.jokeryang.site:55555/GameMsgs",
           data: data,
-          success: function (result) {
-            // console.log(result);       //打印服务端返回的数据(调试用)
+          success: (result) => {
+            // 打印服务端返回的数据(调试用)
+            // console.log(result);
             if (result.resultCode == 200) {
               // console.log("good");
             } else {
               alert(result.msg);
             }
           },
-          error: function () {
+          error: () => {
             alert("提交失败！");
           },
         });
@@ -915,4 +924,4 @@ async function runGame(plans, Display) {
       }
     }
   }
-}
+};
