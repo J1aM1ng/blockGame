@@ -6,6 +6,8 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "antd": "^4.16.13",
+    "axios": "^0.24.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
@@ -22,5 +24,5 @@
     "@types/bluebird": "^3.5.35",
     "@types/validator": "^13.1.4"
   },
-  "type":"module"
+  "type": "module"
 }
