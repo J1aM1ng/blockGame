@@ -38,13 +38,6 @@ body {
   position: relative;
   min-height: 800px;
 }
-.outerCenter {
-  display: flex;
-}
-
-.innerCenter {
-  justify-content: center;
-}
 
 .game {
   /*窗口尺寸*/
@@ -57,7 +50,7 @@ body {
   margin-top: -225px;
   margin-left: -400px;
   border-radius: 0 0 5% 5%;
-  border: 8px groove rgb(52, 166, 251);
+  border: 5px inset rgb(52, 166, 251);
 }
 
 .btn {
@@ -211,16 +204,18 @@ i.icon-yinle {
   /* background-color:rgb(0, 255, 170); */
   /* background: url(../img/bgi.png); */
   background-color: #80dfff;
-
   background-repeat: no-repeat;
-
   background-size: cover;
-
   -webkit-background-size: cover;
-
   -o-background-size: cover;
-
   background-position: center 0;
+}
+
+#login,
+#register,
+#rank,
+#rankbox {
+  border: 8px groove #80dfff;
 }
 #login h2 {
   padding: 15px;
@@ -242,15 +237,10 @@ i.icon-yinle {
   /* background-color:rgb(0, 255, 170); */
   /* background: url(../img/bgi.png); */
   background-color: #80dfff;
-
   background-repeat: no-repeat;
-
   background-size: cover;
-
   -webkit-background-size: cover;
-
   -o-background-size: cover;
-
   background-position: center 0;
 }
 #register h2 {
@@ -274,15 +264,10 @@ i.icon-yinle {
   /* background-color:rgb(0, 255, 170); */
   /* background: url(../img/bgi.png); */
   background-color: #80dfff;
-
   background-repeat: no-repeat;
-
   background-size: cover;
-
   -webkit-background-size: cover;
-
   -o-background-size: cover;
-
   background-position: center 0;
 }
 #rank h2 {
@@ -325,17 +310,11 @@ i.icon-yinle {
   z-index: 100;
   /* background: url(../img/bgi.png); */
   background-color: #80dfff;
-
   background-repeat: no-repeat;
-
   background-size: cover;
-
   -webkit-background-size: cover;
-
   -o-background-size: cover;
-
   background-position: center 0;
-
   overflow: hidden;
 }
 #rankbox table {
