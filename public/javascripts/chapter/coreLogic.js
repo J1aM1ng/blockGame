@@ -133,13 +133,13 @@ let Lava = class Lava {
   }
   static create(pos, ch) {
     if (ch == "=") {
-      //左右移动的岩浆
+      // 左右移动的岩浆
       return new Lava(pos, new Vec(2, 0));
     } else if (ch == "|") {
-      //上下移动的岩浆
+      // 上下移动的岩浆
       return new Lava(pos, new Vec(0, 2));
     } else if (ch == "v") {
-      //上下移动遇到障碍物重置位置的岩浆
+      // 上下移动遇到障碍物重置位置的岩浆
       return new Lava(pos, new Vec(0, 3), pos);
     }
   }
@@ -207,7 +207,6 @@ const elt = (name, attrs, ...children) => {
   }
   return dom;
 };
-
 let DOMDisplay = class DOMDisplay {
   constructor(parent, level) {
     this.dom = elt("div", { class: "game" }, drawGrid(level));
@@ -220,7 +219,6 @@ let DOMDisplay = class DOMDisplay {
 };
 // 单个单位在屏幕上占用的像素数
 let scale = 20;
-
 // 背景网格
 const drawGrid = (level) => {
   return elt(
@@ -290,8 +288,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function (state) {
     this.dom.scrollTop = center.y + margin - height;
   }
 };
-
-Level.prototype.touches = function (pos, size, type) {
+Level.prototype.touches = (pos, size, type) => {
   let xStart = Math.floor(pos.x);
   let xEnd = Math.ceil(pos.x + size.x);
   let yStart = Math.floor(pos.y);
@@ -385,8 +382,8 @@ Coin.prototype.collide = (state) => {
 //   return new State(state.level, state.actors, "lost");
 // };
 
-//岩浆移动的实现
-Lava.prototype.update = function (time, state) {
+// 岩浆移动的实现
+Lava.prototype.update = (time, state) => {
   let newPos = this.pos.plus(this.speed.times(time));
   if (!state.level.touches(newPos, this.size, "wall")) {
     return new Lava(newPos, this.speed, this.reset);
@@ -407,11 +404,11 @@ Lava.prototype.update = function (time, state) {
 //   }
 // };
 
-//硬币震动的实现
+// 硬币震动的实现
 let wobbleSpeed = 8,
   wobbleDist = 0.07;
 
-Coin.prototype.update = function (time) {
+Coin.prototype.update = (time) => {
   let wobble = this.wobble + time * wobbleSpeed;
   let wobblePos = Math.sin(wobble) * wobbleDist;
   return new Coin(
@@ -421,12 +418,11 @@ Coin.prototype.update = function (time) {
   );
 };
 
-//玩家碰撞移动的实现
+// 玩家碰撞移动的实现
 let playerXSpeed = 7;
 let gravity = 30;
 let jumpSpeed = 17;
-
-Player.prototype.update = function (time, state, keys) {
+Player.prototype.update = (time, state, keys) => {
   let xSpeed = 0;
   if (keys.ArrowLeft) xSpeed -= playerXSpeed;
   if (keys.ArrowRight) xSpeed += playerXSpeed;
@@ -451,12 +447,12 @@ Player.prototype.update = function (time, state, keys) {
 // 跟踪用户键盘按键
 const trackKeys = (keys) => {
   let down = Object.create(null);
-  function track(event) {
+  const track = (event) => {
     if (keys.includes(event.key)) {
       down[event.key] = event.type == "keydown";
       event.preventDefault();
     }
-  }
+  };
   window.addEventListener("keydown", track);
   window.addEventListener("keyup", track);
   return down;
@@ -466,14 +462,14 @@ let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
 const runAnimation = (frameFunc) => {
   let lastTime = null;
-  function frame(time) {
+  const frame = (time) => {
     if (lastTime != null) {
       let timeStep = Math.min(time - lastTime, 100) / 1000;
       if (frameFunc(timeStep) === false) return;
     }
     lastTime = time;
     globalID = requestAnimationFrame(frame);
-  }
+  };
   globalID = requestAnimationFrame(frame);
 };
 
@@ -760,7 +756,7 @@ const runGame = async (plans, Display) => {
     clipboard.on("success", (e) => {
       e.clearSelection();
     });
-    btn_copyMap.onclick = function () {
+    btn_copyMap.onclick = () => {
       this.setAttribute("data-clipboard-text", plans[level]);
     };
 
