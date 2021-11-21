@@ -288,7 +288,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function (state) {
     this.dom.scrollTop = center.y + margin - height;
   }
 };
-Level.prototype.touches = (pos, size, type) => {
+Level.prototype.touches = function (pos, size, type) {
   let xStart = Math.floor(pos.x);
   let xEnd = Math.ceil(pos.x + size.x);
   let yStart = Math.floor(pos.y);
@@ -368,7 +368,7 @@ class Delayer {
   }
 }
 // 碰到金币金币就消失,并加血，如果碰到的是最后一块金币则本关赢了
-Coin.prototype.collide = (state) => {
+Coin.prototype.collide = function (state) {
   hp += 5;
   let filtered = state.actors.filter((a) => a != this);
   let status = state.status;
@@ -383,7 +383,7 @@ Coin.prototype.collide = (state) => {
 // };
 
 // 岩浆移动的实现
-Lava.prototype.update = (time, state) => {
+Lava.prototype.update = function (time, state) {
   let newPos = this.pos.plus(this.speed.times(time));
   if (!state.level.touches(newPos, this.size, "wall")) {
     return new Lava(newPos, this.speed, this.reset);
@@ -408,7 +408,7 @@ Lava.prototype.update = (time, state) => {
 let wobbleSpeed = 8,
   wobbleDist = 0.07;
 
-Coin.prototype.update = (time) => {
+Coin.prototype.update = function (time) {
   let wobble = this.wobble + time * wobbleSpeed;
   let wobblePos = Math.sin(wobble) * wobbleDist;
   return new Coin(
@@ -422,7 +422,7 @@ Coin.prototype.update = (time) => {
 let playerXSpeed = 7;
 let gravity = 30;
 let jumpSpeed = 17;
-Player.prototype.update = (time, state, keys) => {
+Player.prototype.update = function (time, state, keys) {
   let xSpeed = 0;
   if (keys.ArrowLeft) xSpeed -= playerXSpeed;
   if (keys.ArrowRight) xSpeed += playerXSpeed;
@@ -756,7 +756,7 @@ const runGame = async (plans, Display) => {
     clipboard.on("success", (e) => {
       e.clearSelection();
     });
-    btn_copyMap.onclick = () => {
+    btn_copyMap.onclick = function () {
       this.setAttribute("data-clipboard-text", plans[level]);
     };
 
